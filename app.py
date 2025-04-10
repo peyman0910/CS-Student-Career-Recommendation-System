@@ -3,13 +3,14 @@ import pickle
 import numpy as np
 #import sklearn
 import pandas as pd
+#from sklearn.externals import joblib
+#import joblib
 
-import joblib
-
-
+with open('career_recommendation_model.pkl', 'rb') as f:
+        loaded_model  = pickle.load(f)
 
 #model = pickle.load(open('svm_model.pkl','rb'))
-loaded_model = joblib.load('career_recommendation_model.pkl')
+#loaded_model = joblib.load('career_recommendation_model.pkl')
 #model = joblib.load('RandomForest_model.pkl')
 
 U = loaded_model['U']
@@ -100,8 +101,9 @@ def home():
     return "Hello world"
 
 
-@app.route('/predict', methods=['POST'])
+@app.route('/predict', methods=['GET', 'POST'])
 def predict():
+    print("Welcome")
     student={
         'Student ID': 'NEW',
         'Interested Domain':request.form.get ('domain'),
