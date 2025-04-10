@@ -129,7 +129,8 @@ def predict():
     '''
 
 if __name__ == '__main__':
-    #app.run(debug=True)
+    app.run(debug=True)
+    '''
     student_data = {
             'domain': "Cloud Computing",
             'python': "Weak",
@@ -150,5 +151,5 @@ if __name__ == '__main__':
     }
 
     print(recommend_for_new_student(mock_student))
-
+    '''
 
