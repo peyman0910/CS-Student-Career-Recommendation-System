@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, request
 import pickle
 import numpy as np
-import sklearn
+#import sklearn
 import pandas as pd
 
 import joblib
@@ -22,10 +22,6 @@ user_means = loaded_model['user_means']
 
 
 app = Flask(__name__)
-
-@app.route('/')
-def home():
-    return "Hello world"
 
 
 def recommend_for_new_student(student_data):
@@ -97,6 +93,11 @@ def recommend_for_new_student(student_data):
     #explanation = create_explanation(mock_student, top_career, career_info, confidence)
 
     return top3_careers, top3_scores#, explanation
+
+
+@app.route('/')
+def home():
+    return "Hello world"
 
 
 @app.route('/predict', methods=['POST'])
