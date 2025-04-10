@@ -112,7 +112,7 @@ def predict():
         'UK Degree Classification': request.form.get('degree')
     }
     result = recommend_for_new_student(student)
-    return jsonify({'top3_careers':result})
+    return jsonify({'top3_careers':result[0]})
     '''
     result = model.predict(input_query)
     input_query = np.array([[humidity, temperature, step_count, respiratery_rate, heart_rate]])
