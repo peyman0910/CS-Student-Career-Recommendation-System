@@ -104,17 +104,22 @@ def home():
 @app.route('/predict', methods=['GET', 'POST'])
 def predict():
     print("Welcome")
-    student={
-        'Student ID': 'NEW',
-        'Interested Domain':request.form.get ('domain'),
-        'Python': request.form.get('python'),
-        'SQL': request.form.get('sql'),
-        'Java':request.form.get('java'),
-        'Projects':request.form.get('project'),
-        'UK Degree Classification': request.form.get('degree')
-    }
-    result = recommend_for_new_student(student)
-    return jsonify({'top3_careers':result[0]})
+    if request.method == 'POST':
+        ##data = request.get_json()
+        #print("Raw JSON received:", data)
+
+        student={
+            'Student ID': 'NEW',
+            'Interested Domain':request.form.get ('domain'),
+            'Python': request.form.get('python'),
+            'SQL': request.form.get('sql'),
+            'Java':request.form.get('java'),
+            'Projects':request.form.get('project'),
+            'UK Degree Classification': request.form.get('degree')
+        }
+        print("student data ",student)
+        result = recommend_for_new_student(student)
+        return jsonify({'top3_careers':result[0]})
     '''
     result = model.predict(input_query)
     input_query = np.array([[humidity, temperature, step_count, respiratery_rate, heart_rate]])
