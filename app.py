@@ -1,17 +1,11 @@
 from flask import Flask, jsonify, request
 import pickle
 import numpy as np
-#import sklearn
 import pandas as pd
-#from sklearn.externals import joblib
-#import joblib
+
 
 with open('career_recommendation_model.pkl', 'rb') as f:
         loaded_model  = pickle.load(f)
-
-#model = pickle.load(open('svm_model.pkl','rb'))
-#loaded_model = joblib.load('career_recommendation_model.pkl')
-#model = joblib.load('RandomForest_model.pkl')
 
 U = loaded_model['U']
 sigma = loaded_model['sigma']
@@ -79,19 +73,6 @@ def recommend_for_new_student(student_data):
     # Create explanation for top career
     top_career = top3_careers[0]
     confidence = 0.90 + 0.09 * top3_scores[0]  # Scale to 90-99%
-    
-    # Create a mock student object for explanation
-    mock_student = {
-        'Student ID': 'NEW',
-        'Interested Domain': student_data['Interested Domain'],
-        'Python': student_data['Python'],
-        'SQL': student_data['SQL'],
-        'Java': student_data['Java'],
-        'Projects': student_data['Projects'],
-        'UK Degree Classification': student_data['UK Degree Classification']
-    }
-
-    #explanation = create_explanation(mock_student, top_career, career_info, confidence)
 
     return top3_careers, top3_scores#, explanation
 
@@ -105,9 +86,6 @@ def home():
 def predict():
     print("Welcome")
     if request.method == 'POST':
-        ##data = request.get_json()
-        #print("Raw JSON received:", data)
-
         student={
             'Student ID': 'NEW',
             'Interested Domain':request.form.get ('domain'),
@@ -120,44 +98,8 @@ def predict():
         print("student data ",student)
         result = recommend_for_new_student(student)
         return jsonify({'top3_careers':result[0]})
-    '''
-    result = model.predict(input_query)
-    input_query = np.array([[humidity, temperature, step_count, respiratery_rate, heart_rate]])
-    print(input_query)
-    #input_query = [[humidity, temperature, step_count, respiratery_rate, heart_rate]]
-    #df1 = pd.DataFrame(input_query)
-    result = recommend_for_new_student(student)
-    return jsonify({'careers':result})
-  
-    #result = {'humidity':humidity, 'temperature':temperature, 'step_count':step_count, 'stress_level':stress_level, 'respiratery_rate':respiratery_rate, 'heart_rate':heart_rate}
-    print(result[0])
-    #return jsonify(str(result))
-    return jsonify({'stress_level':str(result)})
-
-    '''
+   
 
 if __name__ == '__main__':
     app.run(debug=True)
-    '''
-    student_data = {
-            'domain': "Cloud Computing",
-            'python': "Weak",
-            'sql': "Weak",
-            'java': "Weak",
-            'project': "3D Animation",
-            'degree': "First-Class Honours"
-        }
-
-    mock_student = {
-        'Student ID': 'NEW',
-        'Interested Domain': student_data['domain'],
-        'Python': student_data['python'],
-        'SQL': student_data['sql'],
-        'Java': student_data['java'],
-        'Projects': student_data['project'],
-        'UK Degree Classification': student_data['degree']
-    }
-
-    print(recommend_for_new_student(mock_student))
-    '''
-
+    
