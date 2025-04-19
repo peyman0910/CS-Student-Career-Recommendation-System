@@ -82,9 +82,8 @@ def home():
     return "Hello world"
 
 
-@app.route('/predict', methods=['GET', 'POST'])
+@app.route('/predict', methods=['POST'])
 def predict():
-    print("Welcome")
     if request.method == 'POST':
         student={
             'Student ID': 'NEW',
@@ -95,8 +94,9 @@ def predict():
             'Projects':request.form.get('project'),
             'UK Degree Classification': request.form.get('degree')
         }
-        print("student data ",student)
+        #print("student data ",student)
         result = recommend_for_new_student(student)
+        print(result)
         return jsonify({'top3_careers':result[0]})
    
 
